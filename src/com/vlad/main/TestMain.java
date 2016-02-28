@@ -28,12 +28,18 @@ public class TestMain {
 		println("What is your name?");
 		String name = processUserInput();
 
-		Player me = new Player(name, 100, 2);
-
+		Player me = new Player(name, 100, 1);
+		//need a way to increment player stats with each subsequent level
+		//player accuracy++; something like that with every combat loop
 		println(me.getPlayerInfo());
+		System.out.println("Welcome to Mech Warrior: DAUNTLESS ASSAULT!");
+		System.out.println();
+		System.out.println("Your Objective is to survive as many waves of enemies as you can!, 
+		if your hitpoints reach 0, you will be destroyed");
+
 		//Welcome stuff
 		//Explain global options (help menu)
-		println("Press any key to continue...");
+		println("Press any key to continue...(Start Game)");
 		processUserInput();
 		MK1Factory enemy = findWarrior(level);
 		println("How do you want to proceed?");
@@ -63,7 +69,8 @@ public class TestMain {
 	}
 
 	public MK1Factory findWarrior(int level){
-		println("An enemy Mech approaches...");
+		println("Hostile MECH detected, uploading combat profile...");
+		println();
 		int hp = 40 + (level*10);
 		int accuracy = 40 + (level*2);
 		MK1Factory mechEnemy = new MK1Factory(hp, accuracy);
@@ -82,36 +89,42 @@ public class TestMain {
 				inputIsValid = true;
 				weapon = new Laser();
 				me.setCurrentWeapon(weapon);
+				System.out.println("Firing Laser Cannons...");
+				System.out.println();
 			}
 			//Missle
 			else if (input.equalsIgnoreCase("M")) {
 				inputIsValid = true;
 				weapon = new MissilePod();
 				me.setCurrentWeapon(weapon);
+				System.out.println("Firing Missile...");
+				System.out.println();
 			}
 			//Auto-Cannon
 			else if (input.equalsIgnoreCase("A")) {
 				inputIsValid = true;
 				weapon = new AutoCannon();
 				me.setCurrentWeapon(weapon);
+				System.out.println("Firing Auto-Cannon...");
+				System.out.println();
 			}
 			//Disengage
 			else if (input.equalsIgnoreCase("D")) {					
 				inputIsValid = true;
 			}
 			else {
-				println("Invalid input...Try again:");
+				println("Invalid WEAPON CHOICE select (A) (M) (L) (D)");
 				input = processUserInput();
 			}
 		}
 		int fireDamage = me.getCurrentWeapon().fireWeapon(me.getPlayerAccuracy());
-		System.out.println("Fire Damage:"+fireDamage);
+		System.out.println("Damage dealt:"+fireDamage);
 		enemy.setMechHitpoints(enemy.getMechHitpoints()-fireDamage);
 	}
 	
 	public void mechAttack(Player me, MK1Factory enemy){
 		int fireDamage = enemy.attack();
-		System.out.println("Damage taken:"+fireDamage);
+		System.out.println("Damage sustained:"+fireDamage);
 		me.setPlayerHitpoints(me.getPlayerHitpoints()-fireDamage);
 	}
 
